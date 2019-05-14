@@ -94,11 +94,6 @@ class _ConfirmedShift extends State<ConfirmedShiftPage> {
                     style: TextStyle(
                         color: Color(0xFF7674A8), fontWeight: FontWeight.bold)),
               ),
-//          new Container(
-//              child: CardSettingsHeader(
-//                label: lesson.date,
-//                color: Color(0xFF242133),
-//              )),
               new Container(
                 margin:
                     new EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
@@ -112,17 +107,49 @@ class _ConfirmedShift extends State<ConfirmedShiftPage> {
             ],
           ),
         );
-    final makeBody = Container(
-      // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: lessons.length,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard(lessons[index]);
-        },
-      ),
+    final makeBody = Column(
+      children: <Widget>[
+        new Padding(
+          padding: new EdgeInsets.all(15.0),
+          child: new TextField(
+//    controller: searchController,
+            decoration: InputDecoration(
+              hintText: 'Search date',
+              prefixIcon: Icon(Icons.search, color: Color(0xFF7674A8)),
+              suffixIcon: IconButton(
+                  icon: Icon(
+                    Icons.format_list_bulleted,
+                    color: Color(0xFF7674A8),
+                  ),
+                  onPressed: () {}),
+              hintStyle: TextStyle(color: Color(0xFF7674A8)),
+              filled: true,
+              fillColor: Color(0xFF37334D),
+              contentPadding: EdgeInsets.fromLTRB(25.0, 15.0, 20.0, 15.0),
+              enabledBorder: UnderlineInputBorder(
+                borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
+                borderSide: const BorderSide(color: Color(0xFF242133)),
+              ),
+              border: OutlineInputBorder(
+                  borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
+                  borderSide: new BorderSide(color: Color(0xFF242133))),
+            ),
+          ),
+        ),
+        new Expanded(
+          // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: lessons.length,
+            itemBuilder: (BuildContext context, int index) {
+              return makeCard(lessons[index]);
+            },
+          ),
+        ),
+      ],
     );
+
     final topAppBar = AppBar(
       elevation: 0.1,
       backgroundColor: Color(0xFF242133),

@@ -82,10 +82,12 @@ class _ReleaseShift extends State<ReleasedShiftPage> {
       ),
     );
     Card makeCard(Lesson lesson) => Card(
+
       elevation: 0.0,
       color: Color(0xFF242133),
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
       child: new Column(
+
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Padding(
@@ -95,11 +97,7 @@ class _ReleaseShift extends State<ReleasedShiftPage> {
                 style: TextStyle(
                     color: Color(0xFF7674A8), fontWeight: FontWeight.bold)),
           ),
-//          new Container(
-//              child: CardSettingsHeader(
-//                label: lesson.date,
-//                color: Color(0xFF242133),
-//              )),
+
           new Container(
             margin:
             new EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
