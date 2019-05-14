@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-
 import '../scoped_models/main.dart';
 import './profile.dart';
 import './schedule.dart';
+import './confirmed_shifs.dart';
+import './availability.dart';
+import './release_shift.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -23,6 +25,9 @@ class HomePage extends StatelessWidget {
           ),
           tabs: [
             Tab(icon: Icon(Icons.home,) ),
+            Tab(icon: Icon(Icons.check_circle,) ),
+            Tab(icon: Icon(Icons.alarm,) ),
+            Tab(icon: Icon(Icons.more_horiz,) ),
             Tab(icon: Icon(Icons.person,) ),
           ],
           labelStyle: TextStyle(fontSize: 12.0),
@@ -39,7 +44,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     TabController controller;
     return DefaultTabController(
-      length: 2,
+      length: 5,
 //        final double deviceWidth = MediaQuery.of(context).size.height;
 //    print(deviceWidth);
 //    final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
@@ -53,7 +58,9 @@ class HomePage extends StatelessWidget {
 //          ),
 //        appBar: AppBar(),
           body: TabBarView(
-            children: <Widget>[SchedulesPage(model), Profile(model)],
+//            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              SchedulesPage(model),ConfirmedShiftPage(model), AvailabilityPage(model),ReleasedShiftPage(model),Profile(model)],
           ),
           bottomNavigationBar: customBottomNavigationBar(context)
       ),

@@ -5,17 +5,18 @@ import './profile.dart';
 //import '../widgets/ui_elements/logout_list_tile.dart';
 import '../scoped_models/main.dart';
 
-class NotificationPage extends StatefulWidget {
+class UpcommingPage extends StatefulWidget {
+
   final MainModel model;
-  NotificationPage(this.model);
+  UpcommingPage(this.model);
 
   @override
   State<StatefulWidget> createState() {
-    return _NotificationPageState();
+    return _SchedulesPageState();
   }
 }
 
-class _NotificationPageState extends State<NotificationPage> {
+class _SchedulesPageState extends State<UpcommingPage> {
   @override
   initState() {
 //    widget.model.fetchUserSchedules();
@@ -24,14 +25,9 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
       backgroundColor: const Color(0xFF242133),
-      appBar: AppBar(
-        title: Text('Notification'),
-        elevation: 0.0,
-        backgroundColor: const Color(0xFF242133),
-      ),
+
     );
   }
 }

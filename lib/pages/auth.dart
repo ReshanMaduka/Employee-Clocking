@@ -42,15 +42,17 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
     );
   }
 
-
   Widget _buildUserNameTextField() {
     final theme = Theme.of(context);
     return TextFormField(
       decoration: new InputDecoration(
+          hintStyle: TextStyle(color: Colors.white),
           hintText: 'User Name',
           labelStyle: theme.textTheme.caption
-              .copyWith(color: Colors.white, fontSize: 17)),
+              .copyWith(color: Colors.white, fontSize: 17),
+      ),
       keyboardType: TextInputType.text,
+      style: TextStyle(color: Colors.white),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Please enter a username';
@@ -62,14 +64,23 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
     );
   }
 
+
+
   Widget _buildPasswordTextField() {
     final theme = Theme.of(context);
     return TextFormField(
       decoration: InputDecoration(
+          border: new UnderlineInputBorder(
+              borderSide: new BorderSide(
+                  color: Colors.white
+              )
+          ),
+          hintStyle: TextStyle(color: Colors.white),
           hintText: 'Password',
           labelStyle: theme.textTheme.caption
               .copyWith(color: Colors.white, fontSize: 17)),
       obscureText: true,
+      style: TextStyle(color: Colors.white),
       controller: _passwordTextController,
       validator: (String value) {
         if (value.isEmpty || value.length < 6) {
@@ -123,19 +134,15 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
           radius: 48.0,
           child: Image.asset('assets/logo.png'),
         ),
-
       ),
-
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
     return Scaffold(
-
       body: Container(
         decoration: BoxDecoration(
           image: _buildBackgroundImage(),
@@ -154,8 +161,10 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                     SizedBox(
                       height: 2.0,
                     ),
-                    new Text('Emp Clock'),
-
+                    new Text(
+                      'Emp Clock',
+                      style: TextStyle(color: Colors.white, fontSize: 22.0),
+                    ),
                     SizedBox(
                       height: 100.0,
                     ),
@@ -167,13 +176,10 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                     SizedBox(
                       height: 10.0,
                     ),
-
                     SizedBox(
                       height: 30.0,
                     ),
-
                     SizedBox(
-
                       width: 80.0,
                     ),
                     ScopedModelDescendant<MainModel>(
@@ -182,21 +188,24 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                         return model.isLoading
                             ? AdaptiveProgressIndicator()
                             : Row(children: <Widget>[
-                          Expanded(
-                              child: RaisedButton(
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                    new BorderRadius.circular(30.0)),
-                                padding: EdgeInsets.all(18.0),
-                                color: Colors.red,
-                                textColor: Colors.white,
-                                child: Text(_authMode == AuthMode.Login
-                                    ? 'Log in '
-                                    : 'SIGNUP'),
-                                onPressed: () =>
-                                    _submitForm(model.authenticate),
-                              )),
-                        ]);
+                                Expanded(
+                                    child: RaisedButton(
+                                  shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0)),
+                                  padding: EdgeInsets.all(18.0),
+                                  color: Colors.red,
+                                  textColor: Colors.white,
+                                  child: Text(
+                                    _authMode == AuthMode.Login
+                                        ? 'Log in '
+                                        : 'SIGNUP',
+                                    style: TextStyle(fontSize: 20.0),
+                                  ),
+                                  onPressed: () =>
+                                      _submitForm(model.authenticate),
+                                )),
+                              ]);
                       },
                     ),
                   ],

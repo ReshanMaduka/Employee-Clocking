@@ -3,6 +3,7 @@ import 'package:responsive_container/responsive_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../scoped_models/main.dart';
+
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
@@ -308,23 +309,22 @@ class _ProfilePageState extends State<Profile> {
       return new Scaffold(
         backgroundColor: const Color(0xFF242133),
         appBar: AppBar(
-          title: Text('Profile'),
+          title: Text('Profile',style: TextStyle(fontSize: 24.0)),
           elevation: 0.0,
           backgroundColor: const Color(0xFF242133),
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.settings),
+                icon: Icon(Icons.exit_to_app),
 //            tooltip: 'Restitch it',
                 onPressed: () {
                   showDialog(
                       context: context,
                       builder: (_) => AssetGiffyDialog(
                             key: keys[5],
-                            buttonCancelText: Text('No'),
+                            buttonCancelText: Text('No',style: TextStyle(fontSize:20.0,color: Colors.white),),
                             buttonRadius: 20.0,
                             buttonCancelColor: Colors.red,
-//                        buttonRadius: ,
-                            buttonOkText: Text('Yes'),
+                            buttonOkText: Text('Yes',style: TextStyle(fontSize:20.0,color: Colors.white),),
                             image: Image.asset(
                               "assets/logout.gif",
                               fit: BoxFit.cover,

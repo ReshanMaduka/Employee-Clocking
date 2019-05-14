@@ -48,21 +48,24 @@ class _MyAppState extends State<MyApp> {
     return ScopedModel<MainModel>(
       model: _model,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'EasyList',
         // debugShowMaterialGrid: true,
         theme: ThemeData(
+
+            hintColor: Colors.white,
+            inputDecorationTheme: new InputDecorationTheme(
+                labelStyle: new TextStyle(color: Colors.white))
 //            backgroundColor: Colors.red,
-            brightness: Brightness.dark,
+
 //            primarySwatch: Colors.white30,
-            accentColor: Colors.white,
-            buttonColor: Colors.deepPurple
+//            accentColor: Colors.white,
+//            buttonColor: Colors.deepPurple
         ),
         // home: AuthPage(),
         routes: {
           '/': (BuildContext context) =>
           !_isAuthenticated ? AuthPage() : HomePage(_model),
-//          '/admin': (BuildContext context) =>
-//          !_isAuthenticated ? AuthPage() : HomePage(_model),
         },
 //        onGenerateRoute: (RouteSettings settings) {
 //          if (!_isAuthenticated) {
