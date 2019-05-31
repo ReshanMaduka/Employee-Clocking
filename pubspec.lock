@@ -8,13 +8,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
-  auto_size_text:
-    dependency: transitive
-    description:
-      name: auto_size_text
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -22,13 +15,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  card_settings:
-    dependency: "direct main"
-    description:
-      name: card_settings
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.1"
   charcode:
     dependency: transitive
     description:
@@ -43,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.11"
+  connectivity:
+    dependency: "direct main"
+    description:
+      name: connectivity
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.3+2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -56,14 +49,14 @@ packages:
       name: flare_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.0"
+    version: "1.4.1"
   flare_flutter:
     dependency: transitive
     description:
       name: flare_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.0"
+    version: "1.5.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -76,29 +69,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.0"
-  flutter_colorpicker:
-    dependency: transitive
-    description:
-      name: flutter_colorpicker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.3"
-  flutter_cupertino_settings:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: df5b2bb77cb8478b5cd1ca92dd097a3be89abd89
-      url: "https://github.com/AppleEducate/flutter_cupertino_settings"
-    source: git
-    version: "0.1.0"
-  flutter_masked_text:
-    dependency: transitive
-    description:
-      name: flutter_masked_text
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -111,6 +81,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
+  google_maps_flutter:
+    dependency: "direct main"
+    description:
+      name: google_maps_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
+  google_maps_webservice:
+    dependency: "direct main"
+    description:
+      name: google_maps_webservice
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.14"
   http:
     dependency: "direct main"
     description:
@@ -132,13 +116,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.4+3"
-  intl:
-    dependency: transitive
-    description:
-      name: intl
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.15.8"
   location:
     dependency: "direct main"
     description:
@@ -175,7 +152,7 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.6+2"
+    version: "0.9.6+3"
   path:
     dependency: transitive
     description:
@@ -231,7 +208,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.2"
+    version: "0.5.2+2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -318,4 +295,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.1.0 <3.0.0"
-  flutter: ">=0.5.6 <2.0.0"
+  flutter: ">=1.2.0 <2.0.0"

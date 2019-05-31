@@ -7,8 +7,9 @@ import './upcoming.dart';
 import './notification.dart';
 
 class SchedulesPage extends StatelessWidget {
-  final MainModel model;
 
+
+  final MainModel model;
   SchedulesPage(this.model);
 
   @override

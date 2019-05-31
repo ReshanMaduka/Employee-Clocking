@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../models/shift.dart';
+import 'dart:async';
 import 'package:responsive_container/responsive_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../scoped_models/main.dart';
-import 'package:card_settings/card_settings.dart';
+import 'package:connectivity/connectivity.dart';
+
 
 class ConfirmedShiftPage extends StatefulWidget {
   final MainModel model;
@@ -18,6 +20,7 @@ class ConfirmedShiftPage extends StatefulWidget {
 }
 
 class _ConfirmedShift extends State<ConfirmedShiftPage> {
+  StreamSubscription<ConnectivityResult> _subscription;
   List lessons;
 
   @override
@@ -26,87 +29,98 @@ class _ConfirmedShift extends State<ConfirmedShiftPage> {
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    ListTile makeListTile(Lesson lesson) => ListTile(
-          title: Container(
-            child: Column(
-              children: <Widget>[
-                new Row(
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                        Icons.lens,
-                        size: 16.0,
-                        color: Color(0xFF8E8EBF),
-                      ),
-                      onPressed: () => {},
-                    ),
-                    Expanded(
-//                      flex: 4,
-                      child: Padding(
-                          padding: EdgeInsets.only(left: 1.0),
-                          child: Text(lesson.title,
-                              style: TextStyle(
-                                  color: Color(0xFF8E8EBF),
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold))),
-                    ),
-                  ],
-                ),
-                new Row(
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                        Icons.lens,
-                        size: 16.0,
-                        color: Color(0xFF8E8EBF),
-                      ),
-                      onPressed: () => {},
-                    ),
-                    Expanded(
-//                      flex: 4,
-                      child: Padding(
-                          padding: EdgeInsets.only(left: 1.0),
-                          child: Text(lesson.title,
-                              style: TextStyle(
-                                  color: Color(0xFF8E8EBF),
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold))),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-    Card makeCard(Lesson lesson) => Card(
-          elevation: 0.0,
-          color: Color(0xFF242133),
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+
+  ListTile makeListTile(Lesson lesson) =>
+      ListTile(
+        title: Container(
+          child: Column(
             children: <Widget>[
-              new Padding(
-                padding: new EdgeInsets.all(2.0),
-                child: new Text(lesson.date,
-//                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Color(0xFF7674A8), fontWeight: FontWeight.bold)),
+              new Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.lens,
+                      size: 16.0,
+                      color: Color(0xFF8E8EBF),
+                    ),
+                    onPressed: () => {},
+                  ),
+                  Expanded(
+//                      flex: 4,
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 1.0),
+                        child: Text(lesson.title,
+                            style: TextStyle(
+                                color: Color(0xFF8E8EBF),
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold))),
+                  ),
+                ],
               ),
-              new Container(
-                margin:
-                    new EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18.0),
-                    color: Color(
-                      0xFF37334D,
-                    )),
-                child: makeListTile(lesson),
-              )
+              new Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.lens,
+                      size: 16.0,
+                      color: Color(0xFF8E8EBF),
+                    ),
+                    onPressed: () => {},
+                  ),
+                  Expanded(
+//                      flex: 4,
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 1.0),
+                        child: Text(lesson.title,
+                            style: TextStyle(
+                                color: Color(0xFF8E8EBF),
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold))),
+                  ),
+                ],
+              ),
             ],
           ),
-        );
+        ),
+      );
+
+  Card makeCard(Lesson lesson) =>
+      Card(
+        elevation: 0.0,
+        color: Color(0xFF242133),
+        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Padding(
+              padding: new EdgeInsets.all(2.0),
+              child: new Text(lesson.date,
+//                    textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: Color(0xFF7674A8), fontWeight: FontWeight.bold)),
+            ),
+            new Container(
+              margin:
+              new EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18.0),
+                  color: Color(
+                    0xFF37334D,
+                  )),
+              child: makeListTile(lesson),
+            )
+          ],
+        ),
+      );
+
+  final topAppBar = AppBar(
+    elevation: 0.1,
+    backgroundColor: Color(0xFF242133),
+    title: Text('Confirmed Shifts', style: TextStyle(fontSize: 24.0)),
+  );
+
+  @override
+  Widget build(BuildContext context) {
     final makeBody = Column(
       children: <Widget>[
         new Padding(
@@ -150,16 +164,15 @@ class _ConfirmedShift extends State<ConfirmedShiftPage> {
       ],
     );
 
-    final topAppBar = AppBar(
-      elevation: 0.1,
-      backgroundColor: Color(0xFF242133),
-      title: Text('Confirmed Shifts', style: TextStyle(fontSize: 24.0)),
-    );
-
-    return Scaffold(
-      backgroundColor: Color(0xFF242133),
-      appBar: topAppBar,
-      body: makeBody,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacementNamed(context, '/home');
+      },
+      child: Scaffold(
+        backgroundColor: Color(0xFF242133),
+        appBar: topAppBar,
+        body: makeBody,
+      ),
     );
   }
 }
@@ -173,7 +186,7 @@ List getLessons() {
         indicatorValue: 0.33,
         price: 20,
         content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
     Lesson(
         date: "03/01/2019 08.45AM - 03.30PM",
         title: "Observation at Junctions",
@@ -181,7 +194,7 @@ List getLessons() {
         indicatorValue: 0.33,
         price: 50,
         content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
     Lesson(
         date: "04/01/2019 08.45AM - 03.30PM",
         title: "Reverse parallel Parking",
@@ -189,7 +202,7 @@ List getLessons() {
         indicatorValue: 0.66,
         price: 30,
         content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
     Lesson(
         date: "05/01/2019 08.45AM - 03.30PM",
         title: "Reversing around the corner",
@@ -197,7 +210,7 @@ List getLessons() {
         indicatorValue: 0.66,
         price: 30,
         content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
     Lesson(
         date: "06/01/2019 08.45AM - 03.30PM",
         title: "Incorrect Use of Signal",
@@ -205,7 +218,7 @@ List getLessons() {
         indicatorValue: 1.0,
         price: 50,
         content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
     Lesson(
         date: "07/01/2019 08.45AM - 03.30PM",
         title: "Engine Challenges",
@@ -213,7 +226,7 @@ List getLessons() {
         indicatorValue: 1.0,
         price: 50,
         content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
+        "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed."),
     Lesson(
         date: "08/01/2019 08.45AM - 03.30PM",
         title: "Self Driving Car",
@@ -221,6 +234,7 @@ List getLessons() {
         indicatorValue: 1.0,
         price: 50,
         content:
-            "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.  ")
+        "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.  ")
   ];
 }
+

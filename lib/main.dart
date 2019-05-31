@@ -4,10 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:map_view/map_view.dart';
 import './widgets/helpers/custom_route.dart';
+import './shared/global_config.dart';
+
 
 
 import './pages/auth.dart';
 import './pages/home.dart';
+import './pages/map.dart';
+import './pages/home.dart';
+import './pages/release_shift.dart';
 import './scoped_models/main.dart';
 
 
@@ -15,7 +20,7 @@ void main() {
   // debugPaintSizeEnabled = true;
   // debugPaintBaselinesEnabled = true;
   // debugPaintPointersEnabled = true;
-//  MapView.setApiKey(apiKey);
+  MapView.setApiKey(apiKey);
   runApp(MyApp());
 }
 
@@ -31,6 +36,7 @@ class _MyAppState extends State<MyApp> {
   final MainModel _model = MainModel();
   bool _isAuthenticated = false;
 
+
   @override
   void initState() {
     _model.userSubject.listen((bool isAuthenticated) {
@@ -40,7 +46,38 @@ class _MyAppState extends State<MyApp> {
       });
     });
     super.initState();
+
+
   }
+
+
+  void createSnackBar(context) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text('Pups neeed names!'),
+      ),
+    );
+  }
+
+
+//  Widget _snackBar(BuildContext context){
+//          final snackBar = SnackBar(
+//            content: Text('Yay! A SnackBar!'),
+//            action: SnackBarAction(
+//              label: 'Undo',
+//              onPressed: () {
+//                // Some code to undo the change!
+//              },
+//            ),
+//          );
+//
+//          // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+////          Scaffold.of(context).showSnackBar(snackBar);
+//        }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +103,12 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/': (BuildContext context) =>
           !_isAuthenticated ? AuthPage() : HomePage(_model),
+          '/map': (BuildContext context) =>
+          !_isAuthenticated ? MapPage(_model): MapPage(_model),
+         '/schedule': (BuildContext context) =>
+          !_isAuthenticated ? ReleasedShiftPage(_model) : ReleasedShiftPage(_model),
+          '/home': (BuildContext context) =>
+          !_isAuthenticated ? HomePage(_model) : HomePage(_model),
         },
 //        onGenerateRoute: (RouteSettings settings) {
 //          if (!_isAuthenticated) {

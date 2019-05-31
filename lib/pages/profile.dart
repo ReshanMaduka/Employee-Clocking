@@ -79,7 +79,7 @@ class _ProfilePageState extends State<Profile> {
                     child: Text(
                       'Full Name',
                       overflow: TextOverflow.clip,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -89,7 +89,7 @@ class _ProfilePageState extends State<Profile> {
                     child: Text(
                       'E-mail',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -99,7 +99,7 @@ class _ProfilePageState extends State<Profile> {
                     child: Text(
                       'Mobile',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -109,7 +109,7 @@ class _ProfilePageState extends State<Profile> {
                     child: Text(
                       'Gender',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -119,7 +119,7 @@ class _ProfilePageState extends State<Profile> {
                     child: Text(
                       'Address',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -140,7 +140,7 @@ class _ProfilePageState extends State<Profile> {
                     child: Text(
                       _fullName,
                       overflow: TextOverflow.clip,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -152,7 +152,7 @@ class _ProfilePageState extends State<Profile> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       softWrap: false,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -163,7 +163,7 @@ class _ProfilePageState extends State<Profile> {
                       _mobile,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -174,7 +174,7 @@ class _ProfilePageState extends State<Profile> {
                       _gender,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -186,7 +186,7 @@ class _ProfilePageState extends State<Profile> {
                       overflow: TextOverflow.fade,
                       maxLines: 2,
                       softWrap: false,
-                      style: TextStyle(fontSize: 16.0, color: Colors.white),
+                      style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),
@@ -280,78 +280,54 @@ class _ProfilePageState extends State<Profile> {
     ));
   }
 
-//  return ScopedModelDescendant(
-//  builder: (BuildContext context, Widget child, MainModel model) {
-//  showDialog(
-//  context: context,builder: (_) => NetworkGiffyDialog(
-//  image: Image(image: AssetImage('')),
-//  title: Text('Men Wearing Jackets',
-//  style: TextStyle(
-//  fontSize: 22.0, fontWeight: FontWeight.w600),
-//  ),
-//  description: Text('This is a men wearing jackets dialog box.This library helps you easily create fancy giffy dialog.',
-//  textAlign: TextAlign.center,
-//  style: TextStyle(),
-//  ),
-//  onOkButtonPressed: () {},
-//  ) );
-//  });
-
-  _onAlertButtonsPressed(context) {
-    return ScopedModelDescendant(
-        builder: (BuildContext context, Widget child, MainModel model) {});
+  _onAlertButtonsPressed(BuildContext context, MainModel model) {
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "Come Back Soon",
+      desc: "Are you sure you want to Log out? ",
+      buttons: [
+        DialogButton(
+            child: Text(
+              "Yes",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () {
+              model.logout();
+              Navigator.pushReplacementNamed(context, '/');
+            },
+            color: Color(0xFF00A8FF)),
+        DialogButton(
+          child: Text(
+            "No",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          color: Color(0xFFE74C3C),
+        )
+      ],
+    ).show();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant(
+    return WillPopScope(
+        onWillPop: () async {
+          Navigator.pushReplacementNamed(context, '/home');
+//          return false;
+        },
+        child: ScopedModelDescendant(
         builder: (BuildContext context, Widget child, MainModel model) {
       return new Scaffold(
         backgroundColor: const Color(0xFF242133),
         appBar: AppBar(
-          title: Text('Profile',style: TextStyle(fontSize: 24.0)),
+          title: Text('Profile', style: TextStyle(fontSize: 24.0)),
           elevation: 0.0,
           backgroundColor: const Color(0xFF242133),
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.exit_to_app),
-//            tooltip: 'Restitch it',
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (_) => AssetGiffyDialog(
-                            key: keys[5],
-                            buttonCancelText: Text('No',style: TextStyle(fontSize:20.0,color: Colors.white),),
-                            buttonRadius: 20.0,
-                            buttonCancelColor: Colors.red,
-                            buttonOkText: Text('Yes',style: TextStyle(fontSize:20.0,color: Colors.white),),
-                            image: Image.asset(
-                              "assets/logout.gif",
-                              fit: BoxFit.cover,
-                            ),
-                            title: Text(
-                              'Come Back Soon',
-                              style: TextStyle(
-                                  fontSize: 30.0, fontWeight: FontWeight.w800),
-                            ),
-                            description: Text(
-                              'Are you sure you want to Log out? ',
-                              style: TextStyle(
-                                  fontSize: 22.0, fontWeight: FontWeight.w400),
-                              textAlign: TextAlign.center,
-                            ),
-                            onOkButtonPressed: () {
-                              model.logout();
-                              Navigator.pushReplacementNamed(context, '/');
-                            },
-                          ));
-                }
-
-//                    _showQuestionDialog();
-////                    model.logout();
-////                    Navigator.pushReplacementNamed(context, '/');
-//                  },
-                ),
+                onPressed: () => _onAlertButtonsPressed(context, model)),
           ],
         ),
         body: new Column(
@@ -382,6 +358,6 @@ class _ProfilePageState extends State<Profile> {
           ],
         ),
       );
-    });
+    }));
   }
 }
