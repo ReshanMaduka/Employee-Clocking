@@ -11,14 +11,131 @@ import 'package:http_parser/http_parser.dart';
 
 import '../models/user.dart';
 import '../models/auth.dart';
+import '../models/Shifts.dart';
 
 mixin ConnectedScheduleModel on Model {
+  List<Shift> _shifts = [];
   String _selProductId;
   User _authenticatedUser;
+
   bool _isLoading = false;
 }
 
-mixin ScheduleModel on ConnectedScheduleModel {}
+mixin ShiftModel on ConnectedScheduleModel {
+  User get user {
+    return _authenticatedUser;
+  }
+
+  List<Shift> get allShift {
+    return List.from(_shifts);
+  }
+
+  Future<List<Shift>> fetchUsers() async {
+    var response = await http.get(
+        'https://labourbank.com.au/mobileAPI/api/shifts/CHAN0000011473/2019-05-12/2019-05-17',
+        headers: {
+          'authorization': 'Bearer' + ' ' + _authenticatedUser.Token,
+          'content-type': 'application/json'
+        });
+    if (response.statusCode == 200) {
+      final items = json.decode(response.body).cast<Map<String, dynamic>>();
+      List<Shift> listOfUsers = items.map<Shift>((json) {
+        return Shift.fromJson(json);
+      }).toList();
+      return listOfUsers;
+    } else {
+      throw Exception('Failed to load internet');
+    }
+
+//    List<Shift> shifts = [];
+//    var response = await http.get(
+//        'https://labourbank.com.au/mobileAPI/api/shifts/CHAN0000011473/2019-05-12/2019-05-17',
+//        headers: {
+//          'authorization': 'Bearer' + ' ' + _authenticatedUser.Token,
+//          'content-type': 'application/json'
+//        });
+//    var jsonData = json.decode(response.body);
+//    List<dynamic> usersData = new List<dynamic>.from(jsonData);
+//
+//    for (var user in usersData) {
+//      Shift newshift = Shift(shiftId: user["shiftId"].toString(),
+//          candidateId: user["usersData"].toString(),
+//          clientId: user["usersData"].toString(),
+//          shiftDate: user["shiftDate"],
+//          shiftStart: user["shiftStart"],
+//          shiftEnd: user["shiftEnd"],
+//          address: user["address"],
+//          latitude: user["latitude"].toString(),
+//          longitude: user["longitude"]);
+//      shifts.add(newshift);
+//    }
+//    print("ffff");
+//    print(shifts);
+//    return Future.value(shifts);
+  }
+
+//  Future<Null> fetchShift({onlyForUser = false, clearExisting = false}) {
+//    _isLoading = true;
+//    if (clearExisting) {
+//      _shifts = [];
+//    }
+//
+//    print("call");
+//
+//    notifyListeners();
+//    return http.get(
+//        'https://labourbank.com.au/mobileAPI/api/shifts/CHAN0000011473/2019-05-12/2019-05-17',
+//        headers: {
+//          'authorization': 'Bearer' + ' ' + _authenticatedUser.Token,
+//          'content-type': 'application/json'
+//        }).then<Null>((http.Response response) {
+//
+//
+//      final List<Shift> fetchedShiftList = [];
+//      var streetsFromJson = json.decode(response.body);
+//
+//      List<dynamic> streetsList = new List<dynamic>.from(streetsFromJson);
+//
+//      List<dynamic> usersData = new List<dynamic>.from(streetsFromJson);
+//
+//      if (streetsList == null) {
+//        _isLoading = false;
+//        notifyListeners();
+//        return;
+//      }
+//
+//      for (var user in usersData) {
+//      final Shift newShift = Shift(
+//            shiftId: user["shiftId"].toString(),
+//            candidateId: user["usersData"].toString(),
+//            clientId: user["usersData"].toString(),
+//            shiftDate: user["shiftDate"],
+//            shiftStart: user["shiftStart"],
+//            shiftEnd: user["shiftEnd"],
+//            address: user["address"],
+//            latitude: user["latitude"].toString(),
+//            longitude: user["longitude"]);
+//        fetchedShiftList.add(newShift);
+//      }
+////      print("fg");
+//
+////      print(fetchedShiftList);
+//
+//      _shifts = onlyForUser
+//          ? fetchedShiftList.where((Shift shift) {
+//        return shift.candidateId == _authenticatedUser.Id;
+//      }).toList()
+//          : fetchedShiftList;
+//      _isLoading = false;
+//      notifyListeners();
+////      _selProductId = null;
+//    }).catchError((error) {
+//      _isLoading = false;
+//      notifyListeners();
+//      return;
+//    });
+//  }
+}
 
 mixin UtilityModel on ConnectedScheduleModel {
   bool get isLoading {
@@ -57,11 +174,12 @@ mixin UserModel on ConnectedScheduleModel {
     }
 
     final Map<String, dynamic> responseData = json.decode(response.body);
+    print(responseData);
     bool hasError = true;
     String message = 'Something went wrong.';
 //    print(responseData);
     final Map<String, dynamic> userDetail = responseData['data'];
-    print(userDetail);
+//    print(userDetail);
     if (response.statusCode == 200) {
       hasError = false;
       message = 'Authentication succeeded!';
