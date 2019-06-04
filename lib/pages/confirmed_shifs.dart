@@ -7,6 +7,8 @@ import 'package:scoped_model/scoped_model.dart';
 import '../scoped_models/main.dart';
 import 'package:connectivity/connectivity.dart';
 import '../models/Shifts.dart';
+import 'package:flutter/cupertino.dart';
+
 
 class ConfirmedShiftPage extends StatefulWidget {
   final MainModel model;
@@ -19,17 +21,60 @@ class ConfirmedShiftPage extends StatefulWidget {
   }
 }
 
-class _ConfirmedShift extends State<ConfirmedShiftPage> {
+class _ConfirmedShift extends State<ConfirmedShiftPage>with TickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _scaffoldstate = new GlobalKey<ScaffoldState>();
+  AnimationController _controller;
+  Animation<Offset> _slideAnimation;
   StreamSubscription<ConnectivityResult> _subscription;
   List lessons;
   Shift shift;
   List shifts;
+  String conState;
+
+  void _showSnackBar() {
+    _scaffoldstate.currentState.showSnackBar(new SnackBar(
+      content: new Text('No Connection',textAlign: TextAlign.center),
+      backgroundColor: Color(0xFFE74C3C),
+      animation:
+      CurvedAnimation(parent: _controller, curve: Curves.bounceInOut),
+    ));
+  }
 
   @override
   void initState() {
-    widget.model.fetchUsers();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+    _slideAnimation =
+        Tween<Offset>(begin: Offset(0.5, -1.5), end: Offset.zero).animate(
+          CurvedAnimation(parent: _controller, curve: Curves.bounceInOut),
+        );
     super.initState();
+    _subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result.toString() == "ConnectivityResult.none") {
+        conState=result.toString();
+        print(conState);
+        _showSnackBar();
+      } else {
+        conState=result.toString();
+//        widget.model.fetchUsers();
+        print(conState);
+      }
+      // Got a new connectivity status!
+    });
   }
+
+
+  @override
+  dispose() {
+    super.dispose();
+    _subscription.cancel();
+    print("dispose");
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +83,7 @@ class _ConfirmedShift extends State<ConfirmedShiftPage> {
         Navigator.pushReplacementNamed(context, '/home');
       },
       child: Scaffold(
+        key: _scaffoldstate,
         backgroundColor: Color(0xFF242133),
         appBar: new AppBar(
           elevation: 0.1,
@@ -79,7 +125,9 @@ class _ConfirmedShift extends State<ConfirmedShiftPage> {
                 child: FutureBuilder<List<Shift>>(
               future: widget.model.fetchUsers(),
                builder: (context, snapshot) {
-                 if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+                 if (!snapshot.hasData) return Center(child: Theme.of(context).platform == TargetPlatform.iOS
+                     ? CupertinoActivityIndicator()
+                     : CircularProgressIndicator());
                  return ListView(
                    children: snapshot.data
                        .map((shift) => Card(
@@ -88,7 +136,7 @@ class _ConfirmedShift extends State<ConfirmedShiftPage> {
                      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
                      child: new InkWell(
                        onTap: () {
-                         Navigator.pushReplacementNamed(context, '/map');
+//                         Navigator.pushReplacementNamed(context, '/map');
                        },
                        child: Column(
                          crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +176,7 @@ class _ConfirmedShift extends State<ConfirmedShiftPage> {
                                                child: Text(shift.address,
                                                    style: TextStyle(
                                                        color: Color(0xFF8E8EBF),
-                                                       fontSize: 18.0,
+                                                       fontSize: 17.0,
                                                        fontWeight: FontWeight.bold))),
                                          ),
                                        ],
@@ -150,7 +198,7 @@ class _ConfirmedShift extends State<ConfirmedShiftPage> {
                                                child: Text(shift.candidateId,
                                                    style: TextStyle(
                                                        color: Color(0xFF8E8EBF),
-                                                       fontSize: 18.0,
+                                                       fontSize: 17.0,
                                                        fontWeight: FontWeight.bold))),
                                          ),
                                        ],

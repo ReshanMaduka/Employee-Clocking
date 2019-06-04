@@ -190,9 +190,9 @@ class _MapPage extends State<MapPage> {
                         height: 35.0,
                         child: FloatingActionButton(
                           onPressed: () {
-                            Navigator.pop(context);
+//                            Navigator.pop(context);
 //                            Navigator.of(context).pushReplacementNamed('/schedule');
-//                            Navigator.pushReplacementNamed(context, '/schedule');
+                            Navigator.pushReplacementNamed(context, '/schedule');
                           },
                           materialTapTargetSize: MaterialTapTargetSize.padded,
                           backgroundColor: Colors.black,
