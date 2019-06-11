@@ -8,6 +8,10 @@ import './notification.dart';
 
 class SchedulesPage extends StatelessWidget {
 
+  PageController controller = PageController();
+  var currentPageValue = 0.0;
+
+
 
   final MainModel model;
   SchedulesPage(this.model);
@@ -25,8 +29,59 @@ class SchedulesPage extends StatelessWidget {
             elevation: 0.0,
             backgroundColor: const Color(0xFF242133),
           ),
-          body: new Column(),
-        ),
-    );
+          body: PageView.builder(
+            controller: controller,
+            itemBuilder: (context, position) {
+              if (position == currentPageValue.floor()) {
+                return Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()..setEntry(3, 2, 0.004)
+                    ..rotateX(currentPageValue - position)
+                    ..rotateY(currentPageValue - position)
+                    ..rotateZ(currentPageValue - position),
+                  child: Container(
+                    color: position % 2 == 0 ? Colors.blue : Colors.pink,
+                    child: Center(
+                      child: Text(
+                        "Page",
+                        style: TextStyle(color: Colors.white, fontSize: 22.0),
+                      ),
+                    ),
+                  ),
+                );
+              } else if (position == currentPageValue.floor() + 1){
+                return Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()..setEntry(3, 2, 0.004)
+
+                    ..rotateX(currentPageValue - position)
+                    ..rotateY(currentPageValue - position)
+                    ..rotateZ(currentPageValue - position),
+                  child: Container(
+                    color: position % 2 == 0 ? Colors.blue : Colors.pink,
+                    child: Center(
+                      child: Text(
+                        "Page",
+                        style: TextStyle(color: Colors.white, fontSize: 22.0),
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return Container(
+                  color: position % 2 == 0 ? Colors.blue : Colors.pink,
+                  child: Center(
+                    child: Text(
+                      "Page",
+                      style: TextStyle(color: Colors.white, fontSize: 22.0),
+                    ),
+                  ),
+                );
+              }
+            },
+            itemCount: 10,
+          ),
+          ),
+        );
   }
 }

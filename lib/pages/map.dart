@@ -31,6 +31,9 @@ class _MapPage extends State<MapPage> {
 
   MapType _currentMapType = MapType.normal;
 
+//  final Set<Marker> _markers=new Set<St>;
+
+
   final Set<Marker> _markers = {
      Marker(
         markerId: MarkerId("1"),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'package:intl/intl.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +18,6 @@ mixin ConnectedScheduleModel on Model {
   List<Shift> _shifts = [];
   String _selProductId;
   User _authenticatedUser;
-
   bool _isLoading = false;
 }
 
@@ -30,7 +30,55 @@ mixin ShiftModel on ConnectedScheduleModel {
     return List.from(_shifts);
   }
 
-  Future<List<Shift>> fetchUsers() async {
+  Future<String> fetchUser(http.Client client,String from ,String to) async {
+
+    var now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    String currentDate = formatter.format(now);
+
+    var endDate = now.add(new Duration(days: 5));
+    formatter = new DateFormat('yyyy-MM-dd');
+    String toDate = formatter.format(endDate);
+
+    print("from:"+from);
+    print("to:"+to);
+
+    final String uri =
+        'https://labourbank.com.au/mobileAPI/api/shifts/CHAN0000011473/' +
+            currentDate +
+            '/' +
+            toDate;
+
+    var response = await client.get(
+        'https://labourbank.com.au/mobileAPI/api/shifts/CHAN0000011473/'+from+'/'+to,
+        headers: {
+          'authorization': 'Bearer' + ' ' + _authenticatedUser.Token,
+          'content-type': 'application/json'
+        });
+    if (response.statusCode == 200) {
+      print(response.body);
+      return response.body;
+
+    } else {
+      throw Exception('Failed to load internet');
+    }
+  }
+
+  Future<Null> filter() async {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    String currentDate = formatter.format(now);
+
+    var endDate = now.add(new Duration(days: 5));
+    formatter = new DateFormat('yyyy-MM-dd');
+    String toDate = formatter.format(endDate);
+
+    final String uri =
+        'https://labourbank.com.au/mobileAPI/api/shifts/CHAN0000011473/' +
+            currentDate +
+            '/' +
+            toDate;
+
     var response = await http.get(
         'https://labourbank.com.au/mobileAPI/api/shifts/CHAN0000011473/2019-05-12/2019-05-17',
         headers: {
@@ -42,11 +90,14 @@ mixin ShiftModel on ConnectedScheduleModel {
       List<Shift> listOfUsers = items.map<Shift>((json) {
         return Shift.fromJson(json);
       }).toList();
+
       return listOfUsers;
     } else {
+      _isLoading = false;
       throw Exception('Failed to load internet');
     }
   }
+
 }
 
 mixin UtilityModel on ConnectedScheduleModel {

@@ -139,7 +139,7 @@ class _ProfilePageState extends State<Profile> {
                     padding: EdgeInsets.all(15.0),
                     child: Text(
                       _fullName,
-                      overflow: TextOverflow.clip,
+                      overflow: TextOverflow.visible,
                       style: TextStyle(fontSize: 17.0, color: Colors.white),
                     ),
                   ),

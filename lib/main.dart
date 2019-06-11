@@ -7,7 +7,6 @@ import './widgets/helpers/custom_route.dart';
 import './shared/global_config.dart';
 
 
-
 import './pages/auth.dart';
 import './pages/home.dart';
 import './pages/map.dart';
@@ -76,9 +75,6 @@ class _MyAppState extends State<MyApp> {
 ////          Scaffold.of(context).showSnackBar(snackBar);
 //        }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     print('building main page');
@@ -86,10 +82,10 @@ class _MyAppState extends State<MyApp> {
       model: _model,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'EasyList',
+        title: 'Employee Clocking',
         // debugShowMaterialGrid: true,
         theme: ThemeData(
-
+            canvasColor: Colors.transparent,
             hintColor: Colors.white,
             inputDecorationTheme: new InputDecorationTheme(
                 labelStyle: new TextStyle(color: Colors.white))

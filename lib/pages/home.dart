@@ -5,6 +5,7 @@ import './schedule.dart';
 import './confirmed_shifs.dart';
 import './availability.dart';
 import './release_shift.dart';
+import './homePage.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -60,7 +61,7 @@ class HomePage extends StatelessWidget {
           body: TabBarView(
 //            physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
-              SchedulesPage(model),ConfirmedShiftPage(model), AvailabilityPage(model),ReleasedShiftPage(model),Profile(model)],
+              ShiftHomePage(model),ConfirmedShiftPage(model), AvailabilityPage(model),ReleasedShiftPage(model),Profile(model)],
           ),
           bottomNavigationBar: customBottomNavigationBar(context)
       ),
